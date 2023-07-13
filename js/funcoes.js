@@ -1,6 +1,5 @@
 function alert_page(title, message, type){
 
-
     var icon;
 
     switch (type) {
@@ -40,7 +39,7 @@ function alert_page(title, message, type){
         },
         offset: 20,
         spacing: 10,
-        z_index: 1060,
+        z_index: 1061,
         delay: 5000,
         timer: 1000,
         url_target: '_blank',

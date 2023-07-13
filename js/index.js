@@ -127,6 +127,7 @@ function salvar(){
             if (response.status == true){
                 alert_page('Sucesso!', response.msg ,'success');
                 clear_form();
+                $('#md_cadastro_pessoa_fisica').modal('hide');
                 buscar_dados();
             }else{
                 alert_page('Erro!', response.msg, 'warning');
@@ -136,6 +137,36 @@ function salvar(){
             alert_page('Erro!', e, 'warning');
         }
     });
+}
+
+function excluir(){
+
+    let id = $('#valor_id_excluir').val();
+
+    $.ajax({
+        type: "POST",
+        url: 'rotinas/index.php',
+        dataType:"json",
+        data: {
+            id            : id,
+            acao          : btoa('excluir_formulario')
+        },
+        success: function(response){
+            if (response.status == true){
+                alert_page('Sucesso!', response.msg ,'success');
+                $('#valor_id_excluir').val('');
+                $('#md_excluir_pessoa_fisica').modal('hide');
+                buscar_dados();
+
+            }else{
+                alert_page('Erro!', response.msg, 'warning');
+            }
+        },
+        error: function(e){
+            alert_page('Erro!', e, 'warning');
+        }
+    });
+
 }
 
 function editar(){
@@ -218,7 +249,7 @@ function editar(){
             complemento     : complemento,
             cep             : cep,
             sexo            : sexo,
-            acao            : btoa('update_formulario')
+            acao            : btoa('editar_formulario')
             
         },
         success: function(response){
@@ -236,37 +267,8 @@ function editar(){
     });
 }
 
-function excluir(){
-
-    let id = $('#valor_id_excluir').val();
-
-    $.ajax({
-        type: "POST",
-        url: 'rotinas/index.php',
-        dataType:"json",
-        data: {
-            id            : id,
-            acao          : btoa('excluir_formulario')
-        },
-        success: function(response){
-            if (response.status == true){
-                alert_page('Sucesso!', response.msg ,'success');
-                $('#valor_id_excluir').val('');
-                $('#md_excluir_pessoa_fisica').modal('hide');
-                buscar_dados();
-
-            }else{
-                alert_page('Erro!', response.msg, 'warning');
-            }
-        },
-        error: function(e){
-            alert_page('Erro!', e, 'warning');
-        }
-    });
-
-}
-
 function editar_formulario(id){
+
     $('#md_editar_pessoa_fisica').modal('show');
     $('#valor_id_editar').val(id);
 
@@ -276,19 +278,37 @@ function editar_formulario(id){
         dataType:"json",
         data: {
             id            : id,
-            acao          : btoa('editar_formulario')
+            acao          : btoa('buscar_dados')
         },
         success: function(response){
+
             if (response.status == true){
-                mostrar_dados(response.row)
-            }else{
-                alert_page('Erro!', response.msg, 'danger');
+
+                $('#nome_edit').val(response.row[0].nome_completo);
+                $('#nascimento_edit').val(response.row[0].nascimento);
+                $('#cpf_edit').val(response.row[0].cpf);
+                $('#rg_edit').val(response.row[0].rg);
+                $('#telefone_edit').val(response.row[0].telefone);
+                $('#celular_edit').val(response.row[0].celular);
+                $('#email_edit').val(response.row[0].email);
+                $('#logradouro_edit').val(response.row[0].logradouro);
+                $('#bairro_edit').val(response.row[0].bairro);
+                $('#numero_edit').val(response.row[0].numero);
+                $('#complemento_edit').val(response.row[0].complemento);
+                $('#cep_edit').val(response.row[0].cep);
+                if (response.row[0].sexo == 'Masculino'){
+                    $('#masculino_edit').prop('checked', true);
+                }else{
+                    $('#feminino_edit').prop('checked', true);
+                }
             }
+
         },
         error: function(e){
-            alert_page('Erro!', e, 'warning');
-        }
-    });
+        }        
+
+    }); 
+        
 }
 
 function excluir_formulario(id){
@@ -310,28 +330,4 @@ function clear_form(){
     $('#complemento').val('');
     $('#cep').val('');
     $('#masculino').prop('checked', true);
-}
-
-function mostrar_dados(row){
-
-
-    $('#nome_edit').val(row[0].nome_completo);
-    $('#nascimento_edit').val(row[0].data_nascimento);
-    $('#cpf_edit').val(row[0].cpf);
-    $('#rg_edit').val(row[0].rg);
-    $('#telefone_edit').val(row[0].telefone);
-    $('#celular_edit').val(row[0].celular);
-    $('#email_edit').val(row[0].email);
-    $('#logradouro_edit').val(row[0].logradouro);
-    $('#bairro_edit').val(row[0].bairro);
-    $('#numero_edit').val(row[0].numero);
-    $('#complemento_edit').val(row[0].complemento);
-    $('#cep_edit').val(row[0].cep);
-
-    if (row[0].sexo == 'M'){
-        $('#masculino_edit').prop('checked', true);
-    }else{
-        $('#feminino_edit').prop('checked', true);
-    }
-        
 }
