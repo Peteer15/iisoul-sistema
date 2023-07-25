@@ -28,3 +28,6 @@ document.write('<script src="js/table_export.js" type="text/javascript"></script
 // select 2
 document.write('<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>');
 document.write('<script src="js/select2-PTBR.js" type="text/javascript"></script>');
+
+// login
+document.write('<script src="js/login.js" type="text/javascript"></script>');

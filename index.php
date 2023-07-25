@@ -1,3 +1,12 @@
+<?php session_start();
+
+if(!isset($_SESSION['id_cadastro'])){
+    header('Location:http://iisoul-formulario.local/login.html');
+    exit();
+}
+
+?>
+
 <!doctype html>
 <html lang="pt-br">
   <head>
@@ -19,10 +28,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
+              <a class="nav-link active"><?php echo 'Olá, '.$_SESSION['nome_completo']?></a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" onclick="open_page('cadastro.html')">Cadastro</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" onclick="open_page('usuarios.html')">Usuários</a>
+            </li>
+            <li class="nav-item">
+              <a href="logout.php" class="nav-link"><i class="bi bi-box-arrow-right"></i></a>
             </li>
           </ul>
         </div>
